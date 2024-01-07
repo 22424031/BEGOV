@@ -17,11 +17,10 @@ namespace Ward.Application.Feature.ReportWarms.Handlers
     public class UpdateReportWarmStatusHandler : IRequestHandler<UpdateReportWarmStatusRequest, BaseResponse<bool>>
     {
         private readonly IReportWarmRepository _repository;
-        private readonly IUserMapAds _userMapAds;
+      
         private readonly ISendMail _sendMail;
-        public UpdateReportWarmStatusHandler(IReportWarmRepository repository, IUserMapAds userMapAds, ISendMail sendMail) {
+        public UpdateReportWarmStatusHandler(IReportWarmRepository repository, ISendMail sendMail) {
             _repository = repository;
-            _userMapAds = userMapAds;
             _sendMail = sendMail;
         }
 
@@ -41,7 +40,6 @@ namespace Ward.Application.Feature.ReportWarms.Handlers
                 data.Feedback = request.StatusFeedback.Comment;
                 await _repository.Update(data);
                 await _repository.SaveAsync();
-                await _userMapAds.UpdateStatusReportWarm(request.StatusFeedback);
                 await _sendMail.SendMailTo(data.Email, $"Báo cáo của quý vị {data.Status}");
             }
             catch (Exception ex)

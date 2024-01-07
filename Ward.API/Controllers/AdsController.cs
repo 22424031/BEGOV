@@ -9,7 +9,7 @@ using Ward.Application.Constants;
 
 namespace Ward.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Gov")]
     [ApiController]
     public class AdsController : ControllerBase
     {
@@ -25,8 +25,8 @@ namespace Ward.API.Controllers
             rs = await _mediator.Send(new AddAdsRequest { Ads = ads });
             return rs;
         }
-        [HttpGet("GetListAsync")]
-        public async Task<ActionResult<BaseResponse<List<AdsDto>>>> GetListAsync()
+        [HttpGet("GetAdsListAsync")]
+        public async Task<ActionResult<BaseResponse<List<AdsDto>>>> GetAdsListAsync()
         {
             BaseResponse<List<AdsDto>> rs = new();
             rs = await _mediator.Send(new GetAdsListRequest());

@@ -14,10 +14,10 @@ namespace Ward.Application.Feature.Ads.Handlers
     public class UpdateAdsStatusHandler : IRequestHandler<UpdateAdsStatusRequest, BaseResponse<bool>>
     {
         private readonly IAdsRepository _adsRepository;
-        private readonly IUserMapAds _userMapAds;
-        public UpdateAdsStatusHandler(IAdsRepository adsRepository, IUserMapAds userMapAds) {
+  
+        public UpdateAdsStatusHandler(IAdsRepository adsRepository) {
                 _adsRepository = adsRepository;
-            _userMapAds = userMapAds;
+      
         }
 
         public async Task<BaseResponse<bool>> Handle(UpdateAdsStatusRequest request, CancellationToken cancellationToken)
@@ -36,7 +36,7 @@ namespace Ward.Application.Feature.Ads.Handlers
                 data.Feedback = request.StatusFeedback.Comment;
                 await _adsRepository.Update(data);
                 await _adsRepository.SaveChange();
-                await _userMapAds.UpdateStatusUserMap(request.StatusFeedback);
+               
             }
             catch (Exception ex)
             {
